@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Horizon\Horizon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,8 +22,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Allow Horizon dashboard
+        Horizon::auth(function ($request) {
+            return true; // dev only!
+        });
+
         Gate::define('viewHorizon', function ($user = null) {
-            return true;   // ⚠️ wide open for dev
+            return true;
         });
 
         // Allow Log Viewer dashboard
