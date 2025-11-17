@@ -165,8 +165,6 @@ return [
         '*.log',
         '**/*.log',
 
-        storage_path('logs/host_worker.log') => 'Host Worker',
-
         // You can include paths to other log types as well, such as apache, nginx, and more.
         // This key => value pair can be used to rename and group multiple paths into one folder in the UI.
         '/var/log/httpd/*' => 'Apache',
@@ -205,7 +203,7 @@ return [
     |
     */
 
-    'hide_unknown_files' => true,
+    'hide_unknown_files' => false,
 
     /*
     |--------------------------------------------------------------------------
