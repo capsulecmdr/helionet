@@ -112,4 +112,17 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | System Admin Settings
+    |--------------------------------------------------------------------------
+    |
+    | system_admin_id: the primary key of the built-in 'System' admin user.
+    | admin_magic_link_ttl: lifetime in seconds for the one-time login link.
+    |
+    */
+
+    'system_admin_id'      => env('SYSTEM_ADMIN_ID', 1),
+    'admin_magic_link_ttl' => env('ADMIN_MAGIC_LINK_TTL', 60),
+
 ];
