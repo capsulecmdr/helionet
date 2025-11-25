@@ -14,6 +14,5 @@ Route::get('/auth/login/admin/{token}', [AdminMagicLoginController::class, 'logi
     ->middleware('web');
 
 Route::middleware(['web', 'auth', 'admin'])->group(function () {
-    Horizon::routes();
     Route::logViewer();
 });
