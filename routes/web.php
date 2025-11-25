@@ -12,7 +12,3 @@ Route::get('/', function () {
 Route::get('/auth/login/admin/{token}', [AdminMagicLoginController::class, 'login'])
     ->name('admin.magic-login')
     ->middleware('web');
-
-Route::middleware(['web', 'auth', 'admin'])->group(function () {
-    Route::logViewer();
-});
