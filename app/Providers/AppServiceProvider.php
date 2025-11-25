@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         // Gate::define('viewLogViewer', function ($user = null) {
         //     return true;   // ⚠️ wide open for dev
         // });
+        
         Event::listen(RouteMatched::class, function (RouteMatched $event) {
             $route = $event->route;
 
