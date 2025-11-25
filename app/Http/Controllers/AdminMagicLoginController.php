@@ -37,7 +37,8 @@ class AdminMagicLoginController extends Controller
                 'used'        => $link->isUsed(),
             ]);
 
-            return response()->view('auth.admin-link-expired', [], 403);
+            return ("Link Expired");
+            // return response()->view('auth.admin-link-expired', [], 403);
         }
 
         $user = $link->user;
@@ -69,6 +70,7 @@ class AdminMagicLoginController extends Controller
             'ip'      => $request->ip(),
         ]);
 
-        return redirect()->route('admin.dashboard'); // adjust route name if needed
+        return ("login complete");
+            // return redirect()->route('admin.dashboard'); // adjust route name if needed
     }
 }
