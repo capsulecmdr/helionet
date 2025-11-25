@@ -21,18 +21,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Allow Horizon dashboard
-        Horizon::auth(function ($request) {
-            return true; // dev only!
-        });
+        // // Allow Horizon dashboard
+        // Horizon::auth(function ($request) {
+        //     return true; // dev only!
+        // });
 
-        Gate::define('viewHorizon', function ($user = null) {
-            return true;
-        });
+        // Gate::define('viewHorizon', function ($user = null) {
+        //     return true;
+        // });
 
-        // Allow Log Viewer dashboard
-        Gate::define('viewLogViewer', function ($user = null) {
-            return true;   // ⚠️ wide open for dev
-        });
+        // // Allow Log Viewer dashboard
+        // Gate::define('viewLogViewer', function ($user = null) {
+        //     return true;   // ⚠️ wide open for dev
+        // });
     }
 }
