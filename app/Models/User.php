@@ -47,4 +47,14 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
         ];
     }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->id === config('auth.system_admin_id');
+    }
+
+    public function isAdminUser(): bool
+    {
+        return $this->is_admin || $this->isSuperAdmin();
+    }
 }

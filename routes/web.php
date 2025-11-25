@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminMagicLoginController;
+use Laravel\Horizon\Horizon;
 
 Route::get('/', function () {
     // return view('welcome');
@@ -11,3 +12,8 @@ Route::get('/', function () {
 Route::get('/auth/login/admin/{token}', [AdminMagicLoginController::class, 'login'])
     ->name('admin.magic-login')
     ->middleware('web');
+
+Route::middleware(['web', 'auth', 'admin'])->group(function () {
+    Horizon::routes();
+    Route::logViewer();
+});
