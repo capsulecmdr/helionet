@@ -5,8 +5,8 @@ use App\Http\Controllers\AdminMagicLoginController;
 use Laravel\Horizon\Horizon;
 
 Route::get('/', function () {
-    // return view('welcome');
-    return "hi there";
+    return view('welcome');
+    // return "hi there";
 });
 
 Route::get('/auth/login/admin/{token}', [AdminMagicLoginController::class, 'login'])
