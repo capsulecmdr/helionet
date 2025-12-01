@@ -20,12 +20,6 @@
 
 @section('content')
     <div class="hl-grid hl-grid-2">
-        <x-card title="Cluster Status">
-            Cluster health, workers, queues…
-        </x-card>
-
-        <x-card title="Recent Activity">
-            Logs, admin events, plugin events…
-        </x-card>
+        
     </div>
 @endsection
