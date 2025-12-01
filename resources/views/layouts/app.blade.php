@@ -1,3 +1,4 @@
+{{-- resources/views/layouts/app.blade.php --}}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,25 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{-- Core CSS framework + Helionet theme --}}
-    <link rel="stylesheet" href="{{ asset('css/forge-boostrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/forge-bootstrap.css') }}">
+
     {{-- Plugin / page-specific styles --}}
     @stack('styles')
 </head>
-<body class="hl-body">
+<body class="forge-body d-flex flex-column min-vh-100">
 
-    <div class="hl-app-shell">
+    <div id="app" class="d-flex flex-column min-vh-100">
+
         {{-- Top bar --}}
         @include('layouts.partials.topbar')
 
-        <div class="hl-app-main">
+        <div class="flex-grow-1 d-flex">
+
             {{-- Sidebar --}}
             @include('layouts.partials.sidebar')
 
             {{-- Main content area --}}
-            <main class="hl-app-content">
+            <main class="flex-grow-1 d-flex flex-column">
                 {{-- Optional page header section --}}
                 @hasSection('page-header')
-                    <header class="hl-page-header">
+                    <header class="forge-page-header border-bottom px-3 py-2">
                         @yield('page-header')
                     </header>
                 @endif
@@ -33,7 +37,9 @@
                 @includeWhen(session('status'), 'layouts.partials.flash')
 
                 {{-- Primary page content --}}
-                @yield('content')
+                <div class="forge-page-content p-3 flex-grow-1">
+                    @yield('content')
+                </div>
             </main>
         </div>
 
@@ -41,8 +47,9 @@
         @include('layouts.partials.footer')
     </div>
 
-    {{-- Core JS --}}
+    {{-- Core JS (Bootstrap bundle, app scripts, etc.) --}}
     <script src="{{ asset('js/app.js') }}"></script>
+
     {{-- Plugin / page-specific scripts --}}
     @stack('scripts')
 </body>
