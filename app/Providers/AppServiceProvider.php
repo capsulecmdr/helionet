@@ -33,7 +33,8 @@ class AppServiceProvider extends ServiceProvider
 
         // Allow Log Viewer dashboard
          Gate::define('viewLogViewer', function ($user = null) {
-             return true;   // ⚠️ wide open for dev
+             //return true;   // ⚠️ wide open for dev
+             return $user?->isAdminUser() ?? false;
          });
 
          // This controls access to the Horizon dashboard
