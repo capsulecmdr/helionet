@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {{-- Core CSS --}}
-    <link rel="stylesheet" href="{{ asset('css/forge-bootstrap.css') }}">
+    @vite(['resources/css/forge-bootstrap.css', 'resources/js/app.js'])
 
     {{-- Page / plugin style stack --}}
     @stack('styles')
