@@ -1,4 +1,3 @@
-{{-- resources/views/layouts/app.blade.php --}}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,51 +5,87 @@
     <title>@yield('title', 'Helionet')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {{-- Core CSS framework + Helionet theme --}}
+    {{-- Core CSS --}}
     <link rel="stylesheet" href="{{ asset('css/forge-bootstrap.css') }}">
 
-    {{-- Plugin / page-specific styles --}}
+    {{-- Page / plugin style stack --}}
     @stack('styles')
 </head>
-<body class="forge-body d-flex flex-column min-vh-100">
 
-    <div id="app" class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 forge-body">
 
-        {{-- Top bar --}}
-        @include('layouts.partials.topbar')
+    <div class="d-flex flex-column min-vh-100">
+
+        {{-- =======================
+            TOP BAR
+        ======================== --}}
+        <header class="forge-topbar d-flex align-items-center px-3 py-2 border-bottom">
+            <div class="flex-grow-1 d-flex align-items-center gap-3">
+                <button class="btn btn-sm btn-outline-light">☰</button>
+                <span class="h5 mb-0">Helionet</span>
+            </div>
+
+            <div>
+                <span class="text-muted small">
+                    {{ auth()->user()->name ?? 'User' }}
+                </span>
+            </div>
+        </header>
 
         <div class="flex-grow-1 d-flex">
 
-            {{-- Sidebar --}}
-            @include('layouts.partials.sidebar')
+            {{-- =======================
+                SIDEBAR
+            ======================== --}}
+            <aside class="forge-sidebar border-end p-3" style="width: 240px;">
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="#">Dashboard</a>
+                    <a class="nav-link" href="#">Markets</a>
+                    <a class="nav-link" href="#">Intel</a>
+                    <a class="nav-link" href="#">Settings</a>
+                </nav>
+            </aside>
 
-            {{-- Main content area --}}
+            {{-- =======================
+                MAIN CONTENT
+            ======================== --}}
             <main class="flex-grow-1 d-flex flex-column">
-                {{-- Optional page header section --}}
+
+                {{-- Page header (optional) --}}
                 @hasSection('page-header')
-                    <header class="forge-page-header border-bottom px-3 py-2">
+                    <div class="forge-page-header px-3 py-2 border-bottom">
                         @yield('page-header')
-                    </header>
+                    </div>
                 @endif
 
-                {{-- Flash / system messages --}}
-                @includeWhen(session('status'), 'layouts.partials.flash')
+                {{-- Flash messages --}}
+                @if(session('status'))
+                    <div class="alert alert-info m-3">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-                {{-- Primary page content --}}
+                {{-- Page content --}}
                 <div class="forge-page-content p-3 flex-grow-1">
                     @yield('content')
                 </div>
             </main>
         </div>
 
-        {{-- Footer --}}
-        @include('layouts.partials.footer')
+        {{-- =======================
+            FOOTER
+        ======================== --}}
+        <footer class="forge-footer text-center py-2 border-top small text-muted">
+            Helionet © {{ date('Y') }}
+        </footer>
+
     </div>
 
-    {{-- Core JS (Bootstrap bundle, app scripts, etc.) --}}
+    {{-- Core JS --}}
     <script src="{{ asset('js/app.js') }}"></script>
 
-    {{-- Plugin / page-specific scripts --}}
+    {{-- Page / plugin script stack --}}
     @stack('scripts')
+
 </body>
 </html>
