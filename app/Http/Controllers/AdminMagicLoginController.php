@@ -70,7 +70,7 @@ class AdminMagicLoginController extends Controller
             'ip'      => $request->ip(),
         ]);
 
-        return ("login complete");
-            // return redirect()->route('admin.dashboard'); // adjust route name if needed
+        // return ("login complete");
+        return redirect()->route('control-deck.dashboard'); // adjust route name if needed
     }
 }
