@@ -16,7 +16,127 @@
     <!-- Google Charts -->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 
-    
+    <style>
+        /* Page background */
+        body {
+            background: #E9EDF5 !important;
+            color: #374151 !important;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #D9DFEA;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: #4A6CF7 !important;
+        }
+
+        /* CARDS */
+        .card {
+            background: #FFFFFF;
+            border: 1px solid #D9DFEA;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
+
+        .card-header {
+            background: transparent;
+            border-bottom: none;
+            padding-bottom: 0;
+            font-weight: 600;
+            color: #374151;
+            font-size: 1.05rem;
+        }
+
+        /* HEADINGS */
+        h5, h6 {
+            font-weight: 600;
+        }
+
+        /* BADGES */
+        .badge {
+            font-weight: 500;
+            border-radius: 10px;
+            padding: 4px 10px;
+        }
+
+        .badge-level-info {
+            background-color: #4A6CF7 !important;
+            color: #fff;
+        }
+
+        .badge-level-warning {
+            background-color: #F59E0B !important;
+            color: #fff;
+        }
+
+        .badge-level-error {
+            background-color: #EF4444 !important;
+            color: #fff;
+        }
+
+        /* TABLES */
+        table.table tr td {
+            color: #4B5563;
+        }
+
+        table.table-hover tbody tr:hover {
+            background: rgba(74,108,247,0.06);
+        }
+
+        /* BUTTONS */
+        .btn {
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .btn-outline-warning {
+            border-color: #F59E0B;
+            color: #F59E0B;
+        }
+
+        .btn-outline-warning:hover {
+            background: #F59E0B;
+            color: #fff;
+        }
+
+        /* MAINTENANCE STATUS COLORS */
+        .maintenance-active {
+            color: #F59E0B !important;
+            font-weight: 600;
+        }
+
+        .maintenance-inactive {
+            color: #22C55E !important;
+            font-weight: 600;
+        }
+
+        /* LOG SCROLL WRAPPER */
+        .log-table-wrapper {
+            max-height: 240px;
+            overflow-y: auto;
+            border-radius: 12px;
+        }
+
+        /* LINKS */
+        a {
+            color: #4A6CF7;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        #requestsChart {
+            background: transparent !important;
+            border-radius: 18px;
+        }
+    </style>
 </head>
 <body>
 
