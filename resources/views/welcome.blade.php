@@ -5,7 +5,7 @@
     <title>Helios Server Management Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Metro UI 5 CSS -->
+    <!-- Metro UI 5 (core + icons) -->
     <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/metro.css">
     <link rel="stylesheet" href="https://cdn.metroui.org.ua/current/icons.css">
 
@@ -13,141 +13,24 @@
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 
     <style>
-        /* Layout + colors */
-
         body {
-            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f3f4f6;
+            background-color: #f5f5f5;
         }
 
-        .navview {
-            height: 100vh;
-        }
-
-        .navview-content {
-            background-color: #f3f4f6;
-        }
-
-        .app-bar {
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        }
-
-        .app-title {
-            font-weight: 600;
-            font-size: 18px;
-        }
-
-        .app-subtitle {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        /* Sidebar tweaks */
-        .navview-pane {
-            background: #111827;
-            color: #e5e7eb;
-        }
-
-        .navview-pane .brand-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 12px;
-            background: radial-gradient(circle at 30% 30%, #38bdf8, #1d4ed8);
+        .page-wrapper {
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-            color: #f9fafb;
+            flex-direction: column;
         }
 
-        .navview-pane .brand-text {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .navview-pane .brand-subtext {
-            font-size: 11px;
-            color: #9ca3af;
-        }
-
-        .navview-menu .item {
-            border-radius: 10px;
-        }
-
-        .navview-menu .item.active {
-            background: rgba(37, 99, 235, 0.4);
-        }
-
-        /* Cards */
-
-        .helios-card.card {
-            border-radius: 18px;
-            box-shadow: 0 10px 30px rgba(15,23,42,0.12);
-            border: 1px solid #e5e7eb;
-        }
-
-        .helios-card .card-header {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .helios-card-title {
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .helios-card-subtitle {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .helios-chip {
-            border-radius: 999px;
-            padding: 3px 10px;
-            font-size: 11px;
-            font-weight: 500;
-            background: #e0edff;
-            color: #2563eb;
-        }
-
-        /* Stats boxes */
-
-        .helios-stat-box {
-            border-radius: 14px;
-            background-color: #f9fafb;
-            padding: 8px 6px;
-        }
-
-        .helios-stat-label {
-            font-size: 11px;
-            color: #6b7280;
-        }
-
-        .helios-stat-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111827;
-        }
-
-        /* Maintenance state */
-
-        .maintenance-active {
-            color: #f59e0b;
-            font-weight: 600;
-        }
-
-        .maintenance-inactive {
-            color: #22c55e;
-            font-weight: 600;
+        .page-content {
+            flex: 1;
         }
 
         /* Log tables */
-
         .log-table-wrapper {
-            max-height: 240px;
+            max-height: 260px;
             overflow-y: auto;
-            border-radius: 14px;
         }
 
         .log-table-wrapper table {
@@ -155,300 +38,199 @@
             margin-bottom: 0;
         }
 
-        .log-table-wrapper table thead {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: #6b7280;
-            background-color: #f3f4f6;
-        }
-
-        .log-table-wrapper table tbody tr:hover {
-            background-color: #eef2ff;
-        }
-
-        /* Sticky headers in scroll wrapper */
-
-        .log-table-wrapper table thead th {
+        .log-table-wrapper thead th {
             position: sticky;
             top: 0;
-            z-index: 2;
-            background-color: #f3f4f6;
-            box-shadow: 0 1px 0 rgba(209,213,219,0.9);
+            z-index: 1;
+            background: #f3f3f3;
         }
 
-        /* Level badges using Metro’s .tag base */
-
-        .tag.level-info {
-            background-color: #38bdf8;
-            color: #0f172a;
+        /* Small scrollbar (optional) */
+        .log-table-wrapper::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .tag.level-warning {
-            background-color: #facc15;
-            color: #111827;
+        .log-table-wrapper::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
         }
 
-        .tag.level-error {
-            background-color: #f97373;
-            color: #111827;
+        /* Status colors */
+        .maintenance-active {
+            color: #f39c12;
+            font-weight: 600;
         }
-
-        /* Chart */
+        .maintenance-inactive {
+            color: #27ae60;
+            font-weight: 600;
+        }
 
         #requestsChart {
             width: 100%;
             height: 320px;
         }
-
-        /* Small scrollbar */
-
-        .log-table-wrapper::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .log-table-wrapper::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .log-table-wrapper::-webkit-scrollbar-thumb {
-            background: #d1d5db;
-            border-radius: 999px;
-        }
     </style>
 </head>
-<body class="h-vh-100">
+<body>
 
-<div
-    class="navview h-100"
-    data-role="navview"
-    data-expand="md"
-    data-toggle="#sidebar-toggle"
->
-    <!-- Sidebar -->
-    <div class="navview-pane">
-        <div class="p-4 d-flex flex-align-center">
-            <div class="brand-logo mr-3">H</div>
-            <div>
-                <div class="brand-text">Helios</div>
-                <div class="brand-subtext">Server Portal</div>
-            </div>
-        </div>
+<div class="page-wrapper">
 
-        <ul class="navview-menu mt-2">
-            <li class="item active">
-                <a href="#">
-                    <span class="icon"><span class="mif-home"></span></span>
-                    <span class="caption">Dashboard</span>
-                </a>
-            </li>
-            <li class="item">
-                <a href="#">
-                    <span class="icon"><span class="mif-display"></span></span>
-                    <span class="caption">Servers</span>
-                </a>
-            </li>
-            <li class="item">
-                <a href="#">
-                    <span class="icon"><span class="mif-file-text"></span></span>
-                    <span class="caption">Logs</span>
-                </a>
-            </li>
-            <li class="item">
-                <a href="#">
-                    <span class="icon"><span class="mif-cogs"></span></span>
-                    <span class="caption">Settings</span>
-                </a>
-            </li>
+    <!-- Top App Bar (Metro UI) -->
+    <div data-role="app-bar" data-expand="true">
+        <a href="#" class="brand">
+            <span class="caption">Helios</span>
+        </a>
+
+        <ul class="app-bar-menu">
+            <li class="active"><a href="#">Dashboard</a></li>
+            <li><a href="#">Servers</a></li>
+            <li><a href="#">Logs</a></li>
+            <li><a href="#">Settings</a></li>
         </ul>
 
-        <div class="pos-absolute pos-bottom-left p-4 text-small fg-gray">
-            Helios Platform · v0.1
+        <div class="app-bar-item">
+            <span class="mif-user"></span>
+            <span class="ml-1">Admin</span>
         </div>
     </div>
 
-    <!-- Content -->
-    <div class="navview-content h-100 d-flex flex-column">
-
-        <!-- Top bar -->
-        <header class="app-bar bg-white fg-dark px-4 py-2 d-flex flex-align-center flex-justify-between">
-            <div class="d-flex flex-column">
-                <span class="app-title">Server Management</span>
-                <span class="app-subtitle">
-                    Monitor Laravel &amp; Apache health for this Helios instance.
-                </span>
-            </div>
-
-            <div class="d-none d-md-flex flex-align-center flex-gap-4">
-                <div class="d-none d-md-block">
-                    <div class="text-right">
-                        <div class="text-bold text-small">Admin</div>
-                        <div class="text-muted text-small">Helios Operator</div>
-                    </div>
-                </div>
-                <div class="avatar" style="background: linear-gradient(135deg,#22c55e,#16a34a);">
-                    <span class="fg-white">A</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main content -->
-        <main class="content p-4 fg-dark">
+    <!-- Main Content -->
+    <div class="page-content">
+        <div class="container mt-4 mb-4">
             <div class="grid">
 
-                <!-- Top row -->
-                <div class="row flex-justify-between mb-3">
-                    <!-- System Info -->
-                    <div class="cell-md-4 mb-3">
-                        <div class="card helios-card">
-                            <div class="card-header d-flex flex-justify-between flex-align-center">
-                                <div>
-                                    <div class="helios-card-title">System Information</div>
-                                    <div class="helios-card-subtitle">Host and platform details</div>
-                                </div>
-                                <span class="helios-chip">Host</span>
+                <!-- Top row: system info, maintenance, stats -->
+                <div class="row mb-3">
+
+                    <!-- System Information -->
+                    <div class="cell-md-4 mb-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="title">System Information</span>
                             </div>
-                            <div class="card-content p-3">
-                                <dl class="d-flex flex-column mb-3">
-                                    <div class="d-flex flex-justify-between mb-1">
-                                        <dt class="text-small fg-gray">Hostname</dt>
-                                        <dd class="text-small" id="hostnameValue">—</dd>
-                                    </div>
-                                    <div class="d-flex flex-justify-between mb-1">
-                                        <dt class="text-small fg-gray">External IP</dt>
-                                        <dd class="text-small" id="externalIpValue">—</dd>
-                                    </div>
-                                    <div class="d-flex flex-justify-between mb-1">
-                                        <dt class="text-small fg-gray">Helios App URL</dt>
-                                        <dd class="text-small">
+                            <div class="card-content">
+                                <table class="table compact">
+                                    <tbody>
+                                    <tr>
+                                        <td>Hostname</td>
+                                        <td id="hostnameValue">—</td>
+                                    </tr>
+                                    <tr>
+                                        <td>External IP</td>
+                                        <td id="externalIpValue">—</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Helios App URL</td>
+                                        <td>
                                             <a href="#" id="appUrlValue">—</a>
-                                        </dd>
-                                    </div>
-                                </dl>
-                                <div class="text-small fg-gray">
-                                    Values use generated demo data; later wire these to your backend configuration.
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-small fg-gray mt-2">
+                                    All values are mocked; wire these to config/server APIs later.
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Maintenance -->
-                    <div class="cell-md-4 mb-3">
-                        <div class="card helios-card h-100">
-                            <div class="card-header d-flex flex-justify-between flex-align-center">
-                                <div>
-                                    <div class="helios-card-title">Maintenance Mode</div>
-                                    <div class="helios-card-subtitle">Laravel application state</div>
-                                </div>
-                                <span class="helios-chip">Application</span>
+                    <!-- Maintenance Mode -->
+                    <div class="cell-md-4 mb-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="title">Laravel Maintenance Mode</span>
                             </div>
-                            <div class="card-content p-3 d-flex flex-column h-100">
-                                <div class="mb-3">
+                            <div class="card-content">
+                                <div class="mb-2">
                                     <div class="text-small fg-gray">Current status</div>
-                                    <h5 id="maintenanceStatusLabel" class="maintenance-inactive mt-1 mb-1">
+                                    <div id="maintenanceStatusLabel" class="maintenance-inactive">
                                         Maintenance mode: Inactive
-                                    </h5>
-                                    <div class="text-small">
-                                        <span class="fg-gray">Last check:&nbsp;</span>
-                                        <span id="maintenanceLastChecked">—</span>
                                     </div>
                                 </div>
-                                <div class="mt-auto">
-                                    <button
-                                        class="button outline warning small"
-                                        id="maintenanceToggleBtn"
-                                        type="button"
-                                    >
-                                        Toggle Maintenance (placeholder)
-                                    </button>
-                                    <div class="text-small mt-2 fg-gray">
-                                        This only updates the UI. Later, connect it to an endpoint that runs
-                                        <code>php artisan down</code>/<code>up</code>.
-                                    </div>
+                                <div class="mb-2 text-small">
+                                    <span class="fg-gray">Last check:&nbsp;</span>
+                                    <span id="maintenanceLastChecked">—</span>
+                                </div>
+                                <button class="button warning outline small" id="maintenanceToggleBtn" type="button">
+                                    Toggle Maintenance (placeholder)
+                                </button>
+                                <div class="text-small fg-gray mt-2">
+                                    This button only flips the UI. Later, call an endpoint that runs
+                                    <code>php artisan down</code>/<code>up</code>.
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Quick stats -->
-                    <div class="cell-md-4 mb-3">
-                        <div class="card helios-card h-100">
-                            <div class="card-header d-flex flex-justify-between flex-align-center">
-                                <div>
-                                    <div class="helios-card-title">Request Summary (48h)</div>
-                                    <div class="helios-card-subtitle">Traffic snapshot (demo data)</div>
-                                </div>
-                                <span class="helios-chip">Traffic</span>
+                    <!-- Request Summary -->
+                    <div class="cell-md-4 mb-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="title">Request Summary (Last 48h)</span>
                             </div>
-                            <div class="card-content p-3">
+                            <div class="card-content">
                                 <div class="grid">
-                                    <div class="row mb-2">
+                                    <div class="row">
                                         <div class="cell-4">
-                                            <div class="helios-stat-box text-center">
-                                                <div class="helios-stat-label">Total</div>
-                                                <div class="helios-stat-value" id="statTotalRequests">—</div>
+                                            <div class="border bd-default p-2 text-center">
+                                                <div class="text-small fg-gray">Total</div>
+                                                <div id="statTotalRequests" class="text-bold">—</div>
                                             </div>
                                         </div>
                                         <div class="cell-4">
-                                            <div class="helios-stat-box text-center">
-                                                <div class="helios-stat-label">Avg / hr</div>
-                                                <div class="helios-stat-value" id="statAvgRequests">—</div>
+                                            <div class="border bd-default p-2 text-center">
+                                                <div class="text-small fg-gray">Avg / hr</div>
+                                                <div id="statAvgRequests" class="text-bold">—</div>
                                             </div>
                                         </div>
                                         <div class="cell-4">
-                                            <div class="helios-stat-box text-center">
-                                                <div class="helios-stat-label">Peak / hr</div>
-                                                <div class="helios-stat-value" id="statPeakRequests">—</div>
+                                            <div class="border bd-default p-2 text-center">
+                                                <div class="text-small fg-gray">Peak / hr</div>
+                                                <div id="statPeakRequests" class="text-bold">—</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-small fg-gray">
-                                    Stats are computed from the same dataset that drives the web request chart.
+                                <div class="text-small fg-gray mt-2">
+                                    Stats are calculated from the same dataset used for the chart below.
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <!-- Middle row -->
+                <!-- Middle row: chart + error summaries -->
                 <div class="row mb-3">
-                    <!-- Chart -->
-                    <div class="cell-xl-8 mb-3">
-                        <div class="card helios-card h-100">
-                            <div class="card-header d-flex flex-justify-between flex-align-center">
-                                <div>
-                                    <div class="helios-card-title">Web Server Requests (Last 48 Hours)</div>
-                                    <div class="helios-card-subtitle">Demo time-series</div>
-                                </div>
-                                <span class="helios-chip">Chart</span>
+
+                    <!-- Web Requests Chart -->
+                    <div class="cell-xl-8 mb-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="title">Web Server Requests (Last 48 Hours)</span>
                             </div>
-                            <div class="card-content p-3">
+                            <div class="card-content">
                                 <div id="requestsChart"></div>
                                 <div class="text-small fg-gray mt-2">
-                                    Once connected, feed real Apache or reverse-proxy metrics into this chart.
+                                    Later you can feed this from Apache / Nginx / proxy metrics or a Helios metric store.
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Error panels -->
-                    <div class="cell-xl-4 mb-3">
-                        <div class="card helios-card mb-3">
-                            <div class="card-header d-flex flex-justify-between flex-align-center">
-                                <div>
-                                    <div class="helios-card-title">Laravel Error Events</div>
-                                    <div class="helios-card-subtitle">Last 48 hours</div>
-                                </div>
-                                <span class="helios-chip" style="background:#fee2e2;color:#b91c1c;">Errors</span>
+                    <!-- Error Events (Laravel + Apache) -->
+                    <div class="cell-xl-4 mb-2">
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <span class="title">Laravel Error Events (48h)</span>
                             </div>
                             <div class="card-content p-0">
                                 <div class="log-table-wrapper">
                                     <table class="table compact striped">
                                         <thead>
                                         <tr>
-                                            <th style="width:40%;">Time</th>
-                                            <th style="width:60%;">Message</th>
+                                            <th style="width: 40%;">Time</th>
+                                            <th style="width: 60%;">Message</th>
                                         </tr>
                                         </thead>
                                         <tbody id="laravelErrorsBody"></tbody>
@@ -457,21 +239,17 @@
                             </div>
                         </div>
 
-                        <div class="card helios-card">
-                            <div class="card-header d-flex flex-justify-between flex-align-center">
-                                <div>
-                                    <div class="helios-card-title">Apache Error Events</div>
-                                    <div class="helios-card-subtitle">Last 48 hours</div>
-                                </div>
-                                <span class="helios-chip" style="background:#fee2e2;color:#b91c1c;">Errors</span>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="title">Apache Error Events (48h)</span>
                             </div>
                             <div class="card-content p-0">
                                 <div class="log-table-wrapper">
                                     <table class="table compact striped">
                                         <thead>
                                         <tr>
-                                            <th style="width:40%;">Time</th>
-                                            <th style="width:60%;">Message</th>
+                                            <th style="width: 40%;">Time</th>
+                                            <th style="width: 60%;">Message</th>
                                         </tr>
                                         </thead>
                                         <tbody id="apacheErrorsBody"></tbody>
@@ -480,27 +258,26 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <!-- Bottom row: full logs -->
+                <!-- Bottom row: detailed logs -->
                 <div class="row">
-                    <div class="cell-xl-6 mb-3">
-                        <div class="card helios-card h-100">
-                            <div class="card-header d-flex flex-justify-between flex-align-center">
-                                <div>
-                                    <div class="helios-card-title">Recent Laravel Logs</div>
-                                    <div class="helios-card-subtitle">Last ~30 events (demo)</div>
-                                </div>
-                                <span class="helios-chip">Application Logs</span>
+
+                    <!-- Recent Laravel Logs -->
+                    <div class="cell-xl-6 mb-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="title">Recent Laravel Logs (~30 events)</span>
                             </div>
                             <div class="card-content p-0">
                                 <div class="log-table-wrapper">
                                     <table class="table compact striped">
                                         <thead>
                                         <tr>
-                                            <th style="width:25%;">Time</th>
-                                            <th style="width:15%;">Level</th>
-                                            <th style="width:60%;">Message</th>
+                                            <th style="width: 25%;">Time</th>
+                                            <th style="width: 15%;">Level</th>
+                                            <th style="width: 60%;">Message</th>
                                         </tr>
                                         </thead>
                                         <tbody id="laravelLogsBody"></tbody>
@@ -510,23 +287,20 @@
                         </div>
                     </div>
 
-                    <div class="cell-xl-6 mb-3">
-                        <div class="card helios-card h-100">
-                            <div class="card-header d-flex flex-justify-between flex-align-center">
-                                <div>
-                                    <div class="helios-card-title">Recent Apache Logs</div>
-                                    <div class="helios-card-subtitle">Last ~30 events (demo)</div>
-                                </div>
-                                <span class="helios-chip">Web Server Logs</span>
+                    <!-- Recent Apache Logs -->
+                    <div class="cell-xl-6 mb-2">
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="title">Recent Apache Logs (~30 events)</span>
                             </div>
                             <div class="card-content p-0">
                                 <div class="log-table-wrapper">
                                     <table class="table compact striped">
                                         <thead>
                                         <tr>
-                                            <th style="width:25%;">Time</th>
-                                            <th style="width:15%;">Level</th>
-                                            <th style="width:60%;">Message</th>
+                                            <th style="width: 25%;">Time</th>
+                                            <th style="width: 15%;">Level</th>
+                                            <th style="width: 60%;">Message</th>
                                         </tr>
                                         </thead>
                                         <tbody id="apacheLogsBody"></tbody>
@@ -535,14 +309,16 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div> <!-- /grid -->
-        </main>
-    </div>
-</div>
+        </div> <!-- /container -->
+    </div> <!-- /page-content -->
 
-<!-- Metro JS -->
+</div> <!-- /page-wrapper -->
+
+<!-- Metro UI JS -->
 <script src="https://cdn.metroui.org.ua/current/metro.js"></script>
 
 <script>
@@ -572,7 +348,7 @@
         maintenanceLastChecked: now
     };
 
-    // Web requests (48 hours)
+    // Web requests for last 48h
     const webRequestSeries = [];
     for (let h = 47; h >= 0; h--) {
         const t = hoursAgo(h);
@@ -637,7 +413,7 @@
     const apacheErrorEvents  = getErrorEvents(apacheLogEvents);
 
     // -------------------------
-    // DOM rendering helpers
+    // UI helpers
     // -------------------------
 
     function renderEnvInfo() {
@@ -689,13 +465,7 @@
             tr.appendChild(tdTime);
 
             const tdLevel = document.createElement('td');
-            const span = document.createElement('span');
-            span.classList.add('tag', 'small');
-            if (ev.level === 'INFO') span.classList.add('level-info');
-            else if (ev.level === 'WARNING') span.classList.add('level-warning');
-            else span.classList.add('level-error');
-            span.textContent = ev.level;
-            tdLevel.appendChild(span);
+            tdLevel.textContent = ev.level;
             tr.appendChild(tdLevel);
 
             const tdMsg = document.createElement('td');
@@ -747,6 +517,7 @@
     // -------------------------
     // Google Chart: Requests
     // -------------------------
+
     google.charts.load('current', {packages: ['corechart']});
 
     function drawRequestsChart() {
@@ -759,22 +530,22 @@
         });
 
         const options = {
-            legend: { position: 'bottom', textStyle: { color: '#6b7280' } },
+            legend: { position: 'bottom' },
             backgroundColor: 'transparent',
             chartArea: { left: 60, top: 20, right: 16, bottom: 50 },
             hAxis: {
-                textStyle: { color: '#6b7280', fontSize: 10 },
-                gridlines: { color: '#e5e7eb' }
+                textStyle: { fontSize: 10 },
+                gridlines: { color: '#e5e5e5' }
             },
             vAxis: {
                 title: 'Requests',
-                titleTextStyle: { color: '#6b7280', fontSize: 11 },
-                textStyle: { color: '#6b7280', fontSize: 10 },
-                gridlines: { color: '#e5e7eb' },
+                titleTextStyle: { fontSize: 11 },
+                textStyle: { fontSize: 10 },
+                gridlines: { color: '#e5e5e5' },
                 minValue: 0
             },
             series: {
-                0: { curveType: 'function', color: '#2563eb' }
+                0: { curveType: 'function', color: '#2196f3' }
             }
         };
 
