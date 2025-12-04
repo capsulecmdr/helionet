@@ -16,44 +16,7 @@
     <!-- Google Charts -->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <style>
-        body {
-            background-color: #0b1120;
-            color: #e5e7eb;
-        }
-        .navbar {
-            background: #020617;
-        }
-        .card {
-            background-color: #020617;
-            border-color: #1f2933;
-        }
-        .card-header {
-            border-bottom-color: #1f2933;
-        }
-        .text-muted {
-            color: #9ca3af !important;
-        }
-        .log-table-wrapper {
-            max-height: 260px;
-            overflow-y: auto;
-        }
-        .badge-level-info {
-            background-color: #0ea5e9;
-        }
-        .badge-level-warning {
-            background-color: #eab308;
-        }
-        .badge-level-error {
-            background-color: #ef4444;
-        }
-        .maintenance-active {
-            color: #f97316;
-        }
-        .maintenance-inactive {
-            color: #22c55e;
-        }
-    </style>
+    
 </head>
 <body>
 
