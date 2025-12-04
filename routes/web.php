@@ -16,7 +16,7 @@ Route::get('/auth/login/admin/{token}', [AdminMagicLoginController::class, 'logi
 
 Route::prefix('control-deck')
     ->name('control-deck.')
-    ->middleware(['web', 'auth']) // adjust middleware stack as needed
+    ->middleware(['web', 'admin']) // adjust middleware stack as needed
     ->group(function () {
         Route::get('/', function () {
             return view('control-deck.dashboard');
