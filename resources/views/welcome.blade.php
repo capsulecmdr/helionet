@@ -13,6 +13,208 @@
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 
     <style>
+        /* Layout + colors */
+
+        body {
+            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        .navview {
+            height: 100vh;
+        }
+
+        .navview-content {
+            background-color: #f3f4f6;
+        }
+
+        .app-bar {
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .app-title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .app-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Sidebar tweaks */
+        .navview-pane {
+            background: #111827;
+            color: #e5e7eb;
+        }
+
+        .navview-pane .brand-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 12px;
+            background: radial-gradient(circle at 30% 30%, #38bdf8, #1d4ed8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: #f9fafb;
+        }
+
+        .navview-pane .brand-text {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .navview-pane .brand-subtext {
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        .navview-menu .item {
+            border-radius: 10px;
+        }
+
+        .navview-menu .item.active {
+            background: rgba(37, 99, 235, 0.4);
+        }
+
+        /* Cards */
+
+        .helios-card.card {
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.12);
+            border: 1px solid #e5e7eb;
+        }
+
+        .helios-card .card-header {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .helios-card-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .helios-card-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .helios-chip {
+            border-radius: 999px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 500;
+            background: #e0edff;
+            color: #2563eb;
+        }
+
+        /* Stats boxes */
+
+        .helios-stat-box {
+            border-radius: 14px;
+            background-color: #f9fafb;
+            padding: 8px 6px;
+        }
+
+        .helios-stat-label {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .helios-stat-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        /* Maintenance state */
+
+        .maintenance-active {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .maintenance-inactive {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        /* Log tables */
+
+        .log-table-wrapper {
+            max-height: 240px;
+            overflow-y: auto;
+            border-radius: 14px;
+        }
+
+        .log-table-wrapper table {
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+
+        .log-table-wrapper table thead {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #6b7280;
+            background-color: #f3f4f6;
+        }
+
+        .log-table-wrapper table tbody tr:hover {
+            background-color: #eef2ff;
+        }
+
+        /* Sticky headers in scroll wrapper */
+
+        .log-table-wrapper table thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background-color: #f3f4f6;
+            box-shadow: 0 1px 0 rgba(209,213,219,0.9);
+        }
+
+        /* Level badges using Metro’s .tag base */
+
+        .tag.level-info {
+            background-color: #38bdf8;
+            color: #0f172a;
+        }
+
+        .tag.level-warning {
+            background-color: #facc15;
+            color: #111827;
+        }
+
+        .tag.level-error {
+            background-color: #f97373;
+            color: #111827;
+        }
+
+        /* Chart */
+
+        #requestsChart {
+            width: 100%;
+            height: 320px;
+        }
+
+        /* Small scrollbar */
+
+        .log-table-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .log-table-wrapper::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .log-table-wrapper::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 999px;
+        }
     </style>
 </head>
 <body class="h-vh-100">
