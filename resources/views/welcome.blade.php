@@ -5,530 +5,329 @@
     <title>Helios Server Management Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap 5 CSS -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous"
-    >
+    <!-- Adminator CSS bundle (includes Bootstrap, icons, etc.) -->
+    <!-- Adjust the path to match your Adminator installation -->
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Google Charts -->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 
     <style>
-        /* ---------------------------------
-           Helios Soft Dashboard Theme
-           (inspired by provided UI example)
-        ------------------------------------ */
+        /* --- Small overrides for our dashboard --- */
 
-        /* Page background */
-        body {
-            background: #E9EDF5;
-            color: #374151;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+        /* Give the main content a bit of padding like Adminator demos */
+        .main-content {
+            padding: 24px;
         }
 
-        /* Top app bar */
-        .helios-topbar {
-            background: #E9EDF5;
-            border-bottom: none;
-            padding: 18px 32px 0 32px;
-        }
-
-        .helios-topbar-inner {
-            background: #FFFFFF;
-            border-radius: 20px;
-            padding: 10px 20px;
-            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .helios-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .helios-brand-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 12px;
-            background: radial-gradient(circle at 30% 30%, #4A6CF7, #1D4ED8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        .helios-brand-text {
-            font-weight: 600;
-            font-size: 18px;
-            color: #111827;
-        }
-
-        .helios-nav-links a {
-            font-size: 14px;
-            color: #6B7280;
-            margin-right: 18px;
-            text-decoration: none;
-        }
-
-        .helios-nav-links a.active {
-            color: #111827;
-            font-weight: 600;
-        }
-
-        .helios-nav-links a:hover {
-            color: #111827;
-        }
-
-        .helios-search-wrapper {
-            max-width: 360px;
-            flex: 1;
-            margin: 0 24px;
-        }
-
-        .helios-search {
-            border-radius: 999px;
-            border: 1px solid #E5E7EB;
-            padding-left: 40px;
-            font-size: 14px;
-        }
-
-        .helios-search:focus {
-            box-shadow: 0 0 0 1px #4A6CF7;
-            border-color: #4A6CF7;
-        }
-
-        .helios-search-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 14px;
-            color: #9CA3AF;
-        }
-
-        .helios-user-badge {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .helios-user-avatar {
-            width: 34px;
-            height: 34px;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #F97316, #F43F5E);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #FFFFFF;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .helios-user-name {
-            font-size: 14px;
-            color: #111827;
-            font-weight: 500;
-        }
-
-        .helios-user-role {
-            font-size: 12px;
-            color: #9CA3AF;
-        }
-
-        /* Main container */
-        .helios-main {
-            padding: 24px 32px 32px 32px;
-        }
-
-        /* Cards */
-        .card {
-            background: #FFFFFF;
-            border-radius: 20px;
-            border: 1px solid #D9DFEA;
-            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
-        }
-
-        .card-header {
-            background: transparent;
-            border-bottom: none;
-            padding: 18px 20px 4px 20px;
-        }
-
-        .card-header-title {
-            font-weight: 600;
-            font-size: 15px;
-            color: #111827;
-        }
-
-        .card-header-subtitle {
-            font-size: 12px;
-            color: #9CA3AF;
-        }
-
-        .card-body {
-            padding: 16px 20px 20px 20px;
-        }
-
-        .text-muted {
-            color: #9CA3AF !important;
-        }
-
-        /* Info pills */
-        .helios-pill {
-            background: #EEF2FF;
-            color: #4A6CF7;
-            border-radius: 999px;
-            padding: 3px 10px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        /* Stat boxes in quick stats */
-        .helios-stat-box {
-            background: #F3F4F6;
-            border-radius: 16px;
-            padding: 10px 8px;
-        }
-
-        .helios-stat-label {
-            font-size: 11px;
-            color: #9CA3AF;
-        }
-
-        .helios-stat-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111827;
-        }
-
-        /* Maintenance status */
-        .maintenance-active {
-            color: #F59E0B;
-            font-weight: 600;
-        }
-
-        .maintenance-inactive {
-            color: #22C55E;
-            font-weight: 600;
-        }
-
-        .form-text {
-            font-size: 11px;
-        }
-
-        /* Tables & log panels */
+        /* Scrollable log table areas */
         .log-table-wrapper {
             max-height: 230px;
             overflow-y: auto;
-            border-radius: 16px;
         }
 
-        /* Sticky headers for scrollable log tables */
+        /* Sticky headers inside scrollable log tables */
         .log-table-wrapper table thead th {
             position: sticky;
             top: 0;
             z-index: 2;
-            background: #F3F4F6;
-            box-shadow: 0 1px 0 rgba(209, 213, 219, 0.9); /* subtle divider */
+            background: #f5f6f7; /* Adminator light gray */
+            box-shadow: 0 1px 0 rgba(209, 213, 219, 0.9);
         }
 
+        /* Badge coloring for log levels, using Adminator-ish palette */
+        .badge-level-info {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+        .badge-level-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .badge-level-error {
+            background-color: #dc3545;
+            color: #fff;
+        }
 
+        .maintenance-active {
+            color: #ffc107;
+            font-weight: 600;
+        }
+        .maintenance-inactive {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        /* Make tables a bit compact */
         table.table {
-            margin-bottom: 0;
             font-size: 12px;
         }
 
         .table thead {
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: #6B7280;
-            background: #F3F4F6;
+            letter-spacing: 0.03em;
         }
 
-        .table tbody tr td {
-            border-color: #E5E7EB;
-            vertical-align: middle;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: #EEF2FF;
-        }
-
-        .badge {
-            border-radius: 999px;
-            padding: 3px 9px;
-            font-size: 10px;
-            font-weight: 500;
-        }
-
-        .badge-level-info {
-            background-color: #4A6CF7;
-            color: #FFFFFF;
-        }
-
-        .badge-level-warning {
-            background-color: #F59E0B;
-            color: #FFFFFF;
-        }
-
-        .badge-level-error {
-            background-color: #EF4444;
-            color: #FFFFFF;
-        }
-
-        /* Buttons */
-        .btn {
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .btn-outline-warning {
-            border-color: #F59E0B;
-            color: #F59E0B;
-            background: #FFF7ED;
-        }
-
-        .btn-outline-warning:hover {
-            background: #F59E0B;
-            color: #ffffff;
-        }
-
-        /* Google Chart holder */
+        /* Web requests chart size */
         #requestsChart {
             width: 100%;
             height: 320px;
         }
-
-        /* Link style */
-        a {
-            color: #4A6CF7;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Small helper */
-        dl.row dt {
-            font-size: 12px;
-        }
-
-        dl.row dd {
-            font-size: 13px;
-        }
-
-        /* Scrollbar subtle */
-        .log-table-wrapper::-webkit-scrollbar {
-            width: 6px;
-        }
-        .log-table-wrapper::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .log-table-wrapper::-webkit-scrollbar-thumb {
-            background: #D1D5DB;
-            border-radius: 999px;
-        }
     </style>
 </head>
-<body>
+<body class="app">
 
-<!-- TOP BAR -->
-<header class="helios-topbar">
-    <div class="helios-topbar-inner">
-        <div class="helios-brand">
-            <div class="helios-brand-icon">H</div>
-            <div>
-                <div class="helios-brand-text">Helios Platform</div>
-                <div style="font-size:11px;color:#9CA3AF;">Server Management Portal</div>
+<!-- =============== Sidebar =============== -->
+<div class="sidebar">
+    <div class="sidebar-inner">
+        <div class="sidebar-logo">
+            <div class="peers ai-c fxw-nw">
+                <div class="peer peer-greed">
+                    <a class="sidebar-link td-n" href="#">
+                        <div class="peers ai-c fxw-nw">
+                            <div class="peer">
+                                <div class="logo p-10">
+                                    <span class="fsz-sm fw-600 c-white">HE</span>
+                                </div>
+                            </div>
+                            <div class="peer peer-greed">
+                                <h5 class="lh-1 mB-0 text-white">Helios</h5>
+                                <small class="c-light">Server Portal</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div class="helios-nav-links d-none d-md-block">
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Servers</a>
-            <a href="#">Logs</a>
-            <a href="#">Settings</a>
-        </div>
+        <ul class="sidebar-menu scrollable pos-r">
+            <li class="nav-item mT-30">
+                <a class="sidebar-link active" href="#">
+                    <span class="icon-holder">
+                        <i class="c-blue-500 ti-home"></i>
+                    </span>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="sidebar-link" href="#">
+                    <span class="icon-holder">
+                        <i class="c-deep-purple-500 ti-server"></i>
+                    </span>
+                    <span class="title">Servers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="sidebar-link" href="#">
+                    <span class="icon-holder">
+                        <i class="c-amber-500 ti-notepad"></i>
+                    </span>
+                    <span class="title">Logs</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="sidebar-link" href="#">
+                    <span class="icon-holder">
+                        <i class="c-red-500 ti-settings"></i>
+                    </span>
+                    <span class="title">Settings</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
 
-        <div class="helios-search-wrapper d-none d-md-block position-relative">
-            <span class="helios-search-icon">
-                🔍
-            </span>
-            <input type="text" class="form-control helios-search" placeholder="Search servers, logs, actions...">
-        </div>
+<!-- =============== Page Container =============== -->
+<div class="page-container">
 
-        <div class="helios-user-badge">
-            <div class="text-end d-none d-sm-block">
-                <div class="helios-user-name">Admin</div>
-                <div class="helios-user-role">Helios Operator</div>
-            </div>
-            <div class="helios-user-avatar">A</div>
+    <!-- Top navbar -->
+    <div class="header navbar">
+        <div class="header-container">
+            <ul class="nav-left">
+                <li>
+                    <a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);">
+                        <i class="ti-menu"></i>
+                    </a>
+                </li>
+                <li class="search-box">
+                    <a class="search-toggle no-pdd-right" href="javascript:void(0);">
+                        <i class="search-icon ti-search pdd-right-10"></i>
+                        <i class="search-icon-close ti-close pdd-right-10"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav-right">
+                <li class="notifications dropdown">
+                    <span class="badge badge-pill badge-danger">3</span>
+                    <a href="#" class="dropdown-toggle no-after" data-toggle="dropdown">
+                        <i class="ti-bell"></i>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+                        <div class="peer mR-10">
+                            <img class="w-2r bdrs-50p" src="https://via.placeholder.com/40" alt="">
+                        </div>
+                        <div class="peer">
+                            <span class="fsz-sm c-grey-900">Admin</span>
+                            <br>
+                            <small class="fsz-xs c-grey-600">Helios Operator</small>
+                        </div>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-</header>
 
-<!-- MAIN CONTENT -->
-<main class="helios-main">
-    <div class="container-fluid">
+    <!-- Main content -->
+    <main class="main-content bgc-grey-100">
+        <div id="mainContent">
+            <div class="row gap-20 masonry pos-r">
 
-        <!-- Top Row: System Info / Maintenance / Quick Stats -->
-        <div class="row g-3 mb-3">
-            <!-- System Info Card -->
-            <div class="col-lg-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="card-header-title">System Information</div>
-                            <div class="card-header-subtitle">Host and platform details</div>
+                <!-- Top row: system info, maintenance, quick stats -->
+                <div class="masonry-sizer col-md-6 col-lg-4"></div>
+
+                <!-- System Information -->
+                <div class="masonry-item col-md-6 col-lg-4">
+                    <div class="bd bgc-white p-20 mB-20">
+                        <div class="peers ai-c jc-sb mB-10">
+                            <div class="peer">
+                                <h5 class="lh-1 mB-5">System Information</h5>
+                                <small class="c-grey-600">Host and platform details</small>
+                            </div>
+                            <div class="peer">
+                                <span class="badge badge-primary">Host</span>
+                            </div>
                         </div>
-                        <span class="helios-pill">Host</span>
-                    </div>
-                    <div class="card-body">
-                        <dl class="row mb-3">
-                            <dt class="col-5 text-muted">Hostname</dt>
-                            <dd class="col-7" id="hostnameValue">—</dd>
+                        <dl class="row mB-15">
+                            <dt class="col-5 c-grey-600 fsz-sm">Hostname</dt>
+                            <dd class="col-7 fsz-sm" id="hostnameValue">—</dd>
 
-                            <dt class="col-5 text-muted">External IP</dt>
-                            <dd class="col-7" id="externalIpValue">—</dd>
+                            <dt class="col-5 c-grey-600 fsz-sm">External IP</dt>
+                            <dd class="col-7 fsz-sm" id="externalIpValue">—</dd>
 
-                            <dt class="col-5 text-muted">Helios App URL</dt>
-                            <dd class="col-7">
-                                <a href="#" id="appUrlValue">
-                                    —
-                                </a>
+                            <dt class="col-5 c-grey-600 fsz-sm">Helios App URL</dt>
+                            <dd class="col-7 fsz-sm">
+                                <a href="#" id="appUrlValue">—</a>
                             </dd>
                         </dl>
-                        <small class="text-muted">
-                            Values are generated as demo data; wire these to your backend configuration later.
+                        <small class="c-grey-600">
+                            Values are currently generated; later, wire them to your backend configuration.
                         </small>
                     </div>
                 </div>
-            </div>
 
-            <!-- Maintenance Status Card -->
-            <div class="col-lg-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="card-header-title">Maintenance Mode</div>
-                            <div class="card-header-subtitle">Laravel application state</div>
+                <!-- Maintenance status -->
+                <div class="masonry-item col-md-6 col-lg-4">
+                    <div class="bd bgc-white p-20 mB-20">
+                        <div class="peers ai-c jc-sb mB-10">
+                            <div class="peer">
+                                <h5 class="lh-1 mB-5">Maintenance Mode</h5>
+                                <small class="c-grey-600">Laravel application state</small>
+                            </div>
+                            <div class="peer">
+                                <span class="badge badge-info">Application</span>
+                            </div>
                         </div>
-                        <span class="helios-pill">Application</span>
-                    </div>
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <div class="mb-3">
-                            <p class="mb-1 text-muted">Current status</p>
-                            <h5 id="maintenanceStatusLabel" class="maintenance-inactive mb-2">
+                        <div class="mB-15">
+                            <p class="mB-5 c-grey-600 fsz-sm">Current status</p>
+                            <h5 id="maintenanceStatusLabel" class="maintenance-inactive mB-5">
                                 Maintenance mode: Inactive
                             </h5>
-                            <p class="mb-0">
-                                <span class="text-muted">Last check:&nbsp;</span>
+                            <p class="mB-0 fsz-sm">
+                                <span class="c-grey-600">Last check:&nbsp;</span>
                                 <span id="maintenanceLastChecked">—</span>
                             </p>
                         </div>
                         <div>
                             <button
-                                class="btn btn-outline-warning btn-sm"
+                                class="btn btn-outline-warning btn-sm mR-10"
                                 id="maintenanceToggleBtn"
                                 type="button"
                             >
                                 Toggle Maintenance (placeholder)
                             </button>
-                            <div class="form-text mt-2">
-                                This only updates the UI for now. Later, connect it to an endpoint that runs
-                                <code>php artisan down</code> / <code>up</code>.
-                            </div>
+                            <small class="c-grey-600 d-block mT-10 fsz-xs">
+                                This only updates the UI. Later, connect to an endpoint that runs
+                                <code>php artisan down</code>/<code>up</code>.
+                            </small>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Quick Stats (Traffic) -->
-            <div class="col-lg-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="card-header-title">Request Summary (48h)</div>
-                            <div class="card-header-subtitle">Traffic snapshots from demo data</div>
-                        </div>
-                        <span class="helios-pill">Traffic</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row g-2 mb-3">
-                            <div class="col-4">
-                                <div class="helios-stat-box text-center">
-                                    <div class="helios-stat-label">Total</div>
-                                    <div class="helios-stat-value" id="statTotalRequests">—</div>
-                                </div>
+                <!-- Quick request stats -->
+                <div class="masonry-item col-md-6 col-lg-4">
+                    <div class="bd bgc-white p-20 mB-20">
+                        <div class="peers ai-c jc-sb mB-10">
+                            <div class="peer">
+                                <h5 class="lh-1 mB-5">Request Summary (48h)</h5>
+                                <small class="c-grey-600">Traffic snapshot</small>
                             </div>
-                            <div class="col-4">
-                                <div class="helios-stat-box text-center">
-                                    <div class="helios-stat-label">Avg / hr</div>
-                                    <div class="helios-stat-value" id="statAvgRequests">—</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="helios-stat-box text-center">
-                                    <div class="helios-stat-label">Peak / hr</div>
-                                    <div class="helios-stat-value" id="statPeakRequests">—</div>
-                                </div>
+                            <div class="peer">
+                                <span class="badge badge-success">Traffic</span>
                             </div>
                         </div>
-                        <small class="text-muted">
-                            Stats computed from the same dataset driving the web request chart.
+                        <div class="row mB-10">
+                            <div class="col-4">
+                                <div class="bdT bdB bdR p-10 ta-c">
+                                    <div class="c-grey-600 fsz-xs">Total</div>
+                                    <div class="fw-600 fsz-md" id="statTotalRequests">—</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="bdT bdB p-10 ta-c">
+                                    <div class="c-grey-600 fsz-xs">Avg / hr</div>
+                                    <div class="fw-600 fsz-md" id="statAvgRequests">—</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="bdT bdB bdL p-10 ta-c">
+                                    <div class="c-grey-600 fsz-xs">Peak / hr</div>
+                                    <div class="fw-600 fsz-md" id="statPeakRequests">—</div>
+                                </div>
+                            </div>
+                        </div>
+                        <small class="c-grey-600 fsz-xs">
+                            Stats are computed from the same dataset that drives the 48-hour web request chart.
                         </small>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Middle Row: Web Requests Chart + Error Panels -->
-        <div class="row g-3 mb-3">
-            <!-- Web Requests Chart -->
-            <div class="col-xl-8">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="card-header-title">Web Server Requests (Last 48 Hours)</div>
-                            <div class="card-header-subtitle">Demo time-series data</div>
+                <!-- Web Requests Chart -->
+                <div class="masonry-item col-md-12 col-lg-8">
+                    <div class="bd bgc-white p-20 mB-20">
+                        <div class="peers ai-c jc-sb mB-10">
+                            <div class="peer">
+                                <h5 class="lh-1 mB-5">Web Server Requests (Last 48 Hours)</h5>
+                                <small class="c-grey-600">Demo data for now</small>
+                            </div>
+                            <div class="peer">
+                                <span class="badge badge-primary">Chart</span>
+                            </div>
                         </div>
-                        <span class="helios-pill">Chart</span>
-                    </div>
-                    <div class="card-body">
                         <div id="requestsChart"></div>
-                        <small class="text-muted">
-                            Once connected, feed real Apache or reverse-proxy metrics into this chart.
+                        <small class="c-grey-600 fsz-xs">
+                            Later, hook this to real Apache or reverse-proxy stats.
                         </small>
                     </div>
                 </div>
-            </div>
 
-            <!-- Error Events (Laravel & Apache) -->
-            <div class="col-xl-4">
-                <!-- Laravel Errors -->
-                <div class="card mb-3">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="card-header-title">Laravel Error Events</div>
-                            <div class="card-header-subtitle">Last 48 hours</div>
+                <!-- Error panels (Laravel / Apache) -->
+                <div class="masonry-item col-md-12 col-lg-4">
+                    <!-- Laravel errors -->
+                    <div class="bd bgc-white p-20 mB-20">
+                        <div class="peers ai-c jc-sb mB-10">
+                            <div class="peer">
+                                <h5 class="lh-1 mB-5">Laravel Error Events</h5>
+                                <small class="c-grey-600">Last 48 hours</small>
+                            </div>
+                            <div class="peer">
+                                <span class="badge badge-danger">Errors</span>
+                            </div>
                         </div>
-                        <span class="helios-pill" style="background:#FEE2E2;color:#B91C1C;">Errors</span>
-                    </div>
-                    <div class="card-body p-0">
                         <div class="log-table-wrapper">
-                            <table class="table table-sm table-hover">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width:40%;">Time</th>
@@ -536,25 +335,25 @@
                                 </tr>
                                 </thead>
                                 <tbody id="laravelErrorsBody">
-                                <!-- Filled by JS -->
+                                <!-- JS fills -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
 
-                <!-- Apache Errors -->
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="card-header-title">Apache Error Events</div>
-                            <div class="card-header-subtitle">Last 48 hours</div>
+                    <!-- Apache errors -->
+                    <div class="bd bgc-white p-20 mB-20">
+                        <div class="peers ai-c jc-sb mB-10">
+                            <div class="peer">
+                                <h5 class="lh-1 mB-5">Apache Error Events</h5>
+                                <small class="c-grey-600">Last 48 hours</small>
+                            </div>
+                            <div class="peer">
+                                <span class="badge badge-danger">Errors</span>
+                            </div>
                         </div>
-                        <span class="helios-pill" style="background:#FEE2E2;color:#B91C1C;">Errors</span>
-                    </div>
-                    <div class="card-body p-0">
                         <div class="log-table-wrapper">
-                            <table class="table table-sm table-hover">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width:40%;">Time</th>
@@ -562,30 +361,27 @@
                                 </tr>
                                 </thead>
                                 <tbody id="apacheErrorsBody">
-                                <!-- Filled by JS -->
+                                <!-- JS fills -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Bottom Row: Full Recent Logs -->
-        <div class="row g-3">
-            <!-- Laravel Logs -->
-            <div class="col-xl-6">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="card-header-title">Recent Laravel Logs</div>
-                            <div class="card-header-subtitle">Last ~30 events (demo)</div>
+                <!-- Bottom row: full recent logs -->
+                <div class="masonry-item col-md-12 col-lg-6">
+                    <div class="bd bgc-white p-20 mB-20">
+                        <div class="peers ai-c jc-sb mB-10">
+                            <div class="peer">
+                                <h5 class="lh-1 mB-5">Recent Laravel Logs</h5>
+                                <small class="c-grey-600">Last ~30 events</small>
+                            </div>
+                            <div class="peer">
+                                <span class="badge badge-secondary">App Logs</span>
+                            </div>
                         </div>
-                        <span class="helios-pill">Application Logs</span>
-                    </div>
-                    <div class="card-body p-0">
                         <div class="log-table-wrapper">
-                            <table class="table table-sm table-hover">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width:25%;">Time</th>
@@ -594,27 +390,26 @@
                                 </tr>
                                 </thead>
                                 <tbody id="laravelLogsBody">
-                                <!-- Filled by JS -->
+                                <!-- JS fills -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Apache Logs -->
-            <div class="col-xl-6">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="card-header-title">Recent Apache Logs</div>
-                            <div class="card-header-subtitle">Last ~30 events (demo)</div>
+                <div class="masonry-item col-md-12 col-lg-6">
+                    <div class="bd bgc-white p-20 mB-20">
+                        <div class="peers ai-c jc-sb mB-10">
+                            <div class="peer">
+                                <h5 class="lh-1 mB-5">Recent Apache Logs</h5>
+                                <small class="c-grey-600">Last ~30 events</small>
+                            </div>
+                            <div class="peer">
+                                <span class="badge badge-secondary">Web Logs</span>
+                            </div>
                         </div>
-                        <span class="helios-pill">Web Server Logs</span>
-                    </div>
-                    <div class="card-body p-0">
                         <div class="log-table-wrapper">
-                            <table class="table table-sm table-hover">
+                            <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width:25%;">Time</th>
@@ -623,30 +418,26 @@
                                 </tr>
                                 </thead>
                                 <tbody id="apacheLogsBody">
-                                <!-- Filled by JS -->
+                                <!-- JS fills -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-            </div>
+
+            </div> <!-- /row -->
         </div>
+    </main>
+</div> <!-- /page-container -->
 
-    </div>
-</main>
-
-<!-- Bootstrap JS bundle -->
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"
-></script>
+<!-- Adminator JS bundle (includes jQuery, Bootstrap, etc.) -->
+<script src="assets/js/vendor.js"></script>
+<script src="assets/js/app.js"></script>
 
 <script>
     // -------------------------
-    // Demo data generation
+    // Demo data generation (unchanged)
     // -------------------------
-
     const now = new Date();
 
     function hoursAgo(hours) {
@@ -670,20 +461,16 @@
         maintenanceLastChecked: now
     };
 
-    // Web request series for last 48h
     const webRequestSeries = [];
     for (let h = 47; h >= 0; h--) {
         const t = hoursAgo(h);
-        // Fake traffic curve: busier in "daytime"
         const base = 40 + 30 * Math.sin((h / 48) * 2 * Math.PI);
         const noise = Math.round(Math.random() * 20);
         const value = Math.max(5, Math.round(base + noise));
         webRequestSeries.push({ timestamp: t, count: value });
     }
 
-    // Generic log generator
     function generateLogEvents(source, count) {
-        const levels = ['INFO', 'WARNING', 'ERROR'];
         const laravelMessages = [
             'User login successful',
             'Scheduled job completed',
@@ -708,7 +495,6 @@
             'upstream timed out',
             'SSL handshake completed'
         ];
-
         const messages = source === 'laravel' ? laravelMessages : apacheMessages;
 
         const events = [];
@@ -721,14 +507,8 @@
                 levelPick < 0.9 ? 'WARNING' : 'ERROR';
 
             const msg = messages[Math.floor(Math.random() * messages.length)];
-            events.push({
-                timestamp: ts,
-                level,
-                message: msg
-            });
+            events.push({ timestamp: ts, level, message: msg });
         }
-
-        // Sort newest first
         events.sort((a, b) => b.timestamp - a.timestamp);
         return events;
     }
@@ -744,10 +524,6 @@
     const laravelErrorEvents = getErrorEvents(laravelLogEvents);
     const apacheErrorEvents  = getErrorEvents(apacheLogEvents);
 
-    // -------------------------
-    // DOM population helpers
-    // -------------------------
-
     function renderEnvInfo() {
         document.getElementById('hostnameValue').textContent = demoEnv.hostname;
         document.getElementById('externalIpValue').textContent = demoEnv.externalIp;
@@ -756,8 +532,8 @@
         appUrlAnchor.textContent = demoEnv.appUrl;
         appUrlAnchor.href = demoEnv.appUrl;
 
-        const lastChecked = document.getElementById('maintenanceLastChecked');
-        lastChecked.textContent = formatDateTime(demoEnv.maintenanceLastChecked);
+        document.getElementById('maintenanceLastChecked').textContent =
+            formatDateTime(demoEnv.maintenanceLastChecked);
 
         updateMaintenanceStatusUI();
     }
@@ -777,15 +553,12 @@
 
     function attachMaintenanceToggle() {
         const btn = document.getElementById('maintenanceToggleBtn');
-        btn.addEventListener('click', function () {
-            // Placeholder behavior: flip the local value only
+        btn.addEventListener('click', () => {
             demoEnv.maintenanceMode = !demoEnv.maintenanceMode;
             demoEnv.maintenanceLastChecked = new Date();
             updateMaintenanceStatusUI();
             document.getElementById('maintenanceLastChecked').textContent =
                 formatDateTime(demoEnv.maintenanceLastChecked);
-
-            // TODO: replace with backend call that toggles real maintenance mode
         });
     }
 
@@ -802,14 +575,9 @@
             const tdLevel = document.createElement('td');
             const span = document.createElement('span');
             span.classList.add('badge');
-
-            if (ev.level === 'INFO') {
-                span.classList.add('badge-level-info');
-            } else if (ev.level === 'WARNING') {
-                span.classList.add('badge-level-warning');
-            } else {
-                span.classList.add('badge-level-error');
-            }
+            if (ev.level === 'INFO')      span.classList.add('badge-level-info');
+            else if (ev.level === 'WARNING') span.classList.add('badge-level-warning');
+            else                           span.classList.add('badge-level-error');
             span.textContent = ev.level;
             tdLevel.appendChild(span);
             tr.appendChild(tdLevel);
@@ -839,13 +607,12 @@
             tbody.appendChild(tr);
         });
 
-        if (events.length === 0) {
+        if (!events.length) {
             const tr = document.createElement('tr');
             const td = document.createElement('td');
             td.colSpan = 2;
-            td.classList.add('text-muted');
-            td.style.fontSize = '12px';
             td.textContent = 'No error events found in the last 48 hours.';
+            td.classList.add('c-grey-600', 'fsz-xs');
             tr.appendChild(td);
             tbody.appendChild(tr);
         }
@@ -853,18 +620,15 @@
 
     function renderQuickStats() {
         const total = webRequestSeries.reduce((sum, p) => sum + p.count, 0);
-        const avg = Math.round(total / webRequestSeries.length);
-        const peak = Math.max(...webRequestSeries.map(p => p.count));
+        const avg   = Math.round(total / webRequestSeries.length);
+        const peak  = Math.max(...webRequestSeries.map(p => p.count));
 
         document.getElementById('statTotalRequests').textContent = total.toLocaleString();
-        document.getElementById('statAvgRequests').textContent = avg.toLocaleString();
-        document.getElementById('statPeakRequests').textContent = peak.toLocaleString();
+        document.getElementById('statAvgRequests').textContent   = avg.toLocaleString();
+        document.getElementById('statPeakRequests').textContent  = peak.toLocaleString();
     }
 
-    // -------------------------
-    // Google Chart: Requests
-    // -------------------------
-
+    // Google chart
     google.charts.load('current', {packages: ['corechart']});
 
     function drawRequestsChart() {
@@ -877,27 +641,22 @@
         });
 
         const options = {
-            legend: { position: 'bottom', textStyle: { color: '#6B7280' } },
+            legend: { position: 'bottom', textStyle: { color: '#6c757d' } },
             backgroundColor: 'transparent',
-            chartArea: {
-                left: 60, top: 20, right: 20, bottom: 50
-            },
+            chartArea: { left: 60, top: 10, right: 20, bottom: 50 },
             hAxis: {
-                textStyle: { color: '#9CA3AF', fontSize: 10 },
-                gridlines: { color: '#E5E7EB' }
+                textStyle: { color: '#6c757d', fontSize: 10 },
+                gridlines: { color: '#e9ecef' }
             },
             vAxis: {
                 title: 'Requests',
-                titleTextStyle: { color: '#9CA3AF', fontSize: 11 },
-                textStyle: { color: '#6B7280', fontSize: 10 },
-                gridlines: { color: '#E5E7EB' },
+                titleTextStyle: { color: '#6c757d', fontSize: 11 },
+                textStyle: { color: '#6c757d', fontSize: 10 },
+                gridlines: { color: '#e9ecef' },
                 minValue: 0
             },
             series: {
-                0: {
-                    curveType: 'function',
-                    color: '#4A6CF7'
-                }
+                0: { curveType: 'function', color: '#17a2b8' }
             }
         };
 
@@ -906,23 +665,17 @@
         );
         chart.draw(dataTable, options);
     }
-
     google.charts.setOnLoadCallback(drawRequestsChart);
 
-    // -------------------------
-    // Initialize dashboard
-    // -------------------------
-
-    document.addEventListener('DOMContentLoaded', function () {
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
         renderEnvInfo();
         attachMaintenanceToggle();
         renderQuickStats();
 
-        // Recent logs (~30 events)
         renderLogsTable(laravelLogEvents, 'laravelLogsBody', 30);
         renderLogsTable(apacheLogEvents,  'apacheLogsBody', 30);
 
-        // Error logs (48h)
         renderErrorTable(laravelErrorEvents, 'laravelErrorsBody', 15);
         renderErrorTable(apacheErrorEvents,  'apacheErrorsBody', 15);
     });
