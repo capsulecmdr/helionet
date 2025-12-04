@@ -232,6 +232,16 @@
             border-radius: 16px;
         }
 
+        /* Sticky headers for scrollable log tables */
+        .log-table-wrapper table thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: #F3F4F6;
+            box-shadow: 0 1px 0 rgba(209, 213, 219, 0.9); /* subtle divider */
+        }
+
+
         table.table {
             margin-bottom: 0;
             font-size: 12px;
