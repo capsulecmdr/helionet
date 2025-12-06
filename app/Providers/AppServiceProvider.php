@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Horizon\Horizon;
+use app\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
